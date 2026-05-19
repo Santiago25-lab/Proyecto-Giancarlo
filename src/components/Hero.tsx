@@ -63,7 +63,7 @@ const Hero = () => {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src="/Explocion suave Iphone.mp4" type="video/mp4" />
+          <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60 z-10" />
       </motion.div>
