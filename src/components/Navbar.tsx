@@ -34,10 +34,10 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 shrink-0 bg-red-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-black text-xs">iN</span>
           </div>
-          <span className="text-black font-black tracking-tighter text-xl">iNARIÑO</span>
+          <img src="/Logo inariño.png" alt="iNARIÑO Logo" className="h-6 object-contain" />
         </div>
 
         {/* Desktop Links */}
