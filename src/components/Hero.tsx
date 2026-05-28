@@ -200,7 +200,7 @@ const Hero = () => {
       <div
         ref={scrollLineRef}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40"
-        style={{ scaleY: 0 }}
+        style={{ transform: 'scaleY(0)' }}
       >
         <div className="w-px h-12 bg-gradient-to-b from-red-600 to-transparent animate-bounce" />
       </div>
