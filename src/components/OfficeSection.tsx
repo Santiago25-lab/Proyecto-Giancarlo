@@ -177,7 +177,7 @@ const OfficeSection = () => {
       ref={containerRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative w-full min-h-[95vh] flex items-center justify-center py-20 px-6 overflow-hidden bg-black text-white"
+      className="relative z-10 w-full min-h-[95vh] flex items-center justify-center py-20 px-6 overflow-hidden bg-black text-white"
     >
       
       {/* 100% Bright & Unobstructed Full Background Image */}
