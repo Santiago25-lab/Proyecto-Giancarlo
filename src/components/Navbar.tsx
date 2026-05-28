@@ -23,15 +23,7 @@ const Navbar = () => {
     if (!navRef.current) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.2 });
-
-      // Nav bar slides down from above
-      tl.from(navRef.current, {
-        y: -80,
-        opacity: 0,
-        duration: 1,
-        ease: 'expo.out',
-      });
+      const tl = gsap.timeline();
 
       // Logo clips in
       tl.from(logoRef.current, {
@@ -39,7 +31,7 @@ const Navbar = () => {
         opacity: 0,
         duration: 0.9,
         ease: 'expo.out',
-      }, '-=0.6');
+      });
 
       // Links stagger in
       if (linksRef.current) {
@@ -78,7 +70,7 @@ const Navbar = () => {
     <nav
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${
-        scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        scrolled ? 'bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-sm' : 'bg-transparent border-b border-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
