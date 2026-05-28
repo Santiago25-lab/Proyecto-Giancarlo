@@ -13,7 +13,10 @@ const Navbar = () => {
 
   // Scroll detection
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      // Aparece el fondo justo cuando termina de pasar el video (la primera pantalla completa)
+      setScrolled(window.scrollY > window.innerHeight - 80);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
