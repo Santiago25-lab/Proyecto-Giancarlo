@@ -75,7 +75,7 @@ const OfficeSection = () => {
       for (let y = spacing / 2; y < height; y += spacing) {
         const rx = x + (Math.random() - 0.5) * 8;
         const ry = y + (Math.random() - 0.5) * 8;
-        
+
         particles.push({
           x: rx,
           y: ry,
@@ -121,17 +121,17 @@ const OfficeSection = () => {
         const dx = mouse.x - p.px;
         const dy = mouse.y - p.py;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        
+
         // Repulsion / Warp Force (Snaps away from cursor within radius)
         const repelRadius = 140;
         if (mouse.active && dist < repelRadius) {
           const force = (repelRadius - dist) / repelRadius; // 0 to 1
           const angle = Math.atan2(dy, dx);
-          
+
           // Target point pushed away from cursor
           const tx = p.px - Math.cos(angle) * force * 38;
           const ty = p.py - Math.sin(angle) * force * 38;
-          
+
           p.vx += (tx - p.px) * 0.08;
           p.vy += (ty - p.py) * 0.08;
         }
@@ -173,40 +173,40 @@ const OfficeSection = () => {
   }, []);
 
   return (
-    <section 
+    <section
       ref={containerRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="relative z-10 w-full min-h-[95vh] flex items-center justify-center py-20 px-6 overflow-hidden bg-black text-white"
     >
-      
+
       {/* 100% Bright & Unobstructed Full Background Image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <img 
-          src="/equipo-giancarlo.png" 
-          alt="Sede iNARIÑO" 
+        <img
+          src="/equipo-giancarlo.png"
+          alt="Sede iNARIÑO"
           className="w-full h-full object-cover opacity-90 transition-transform duration-[2000ms] ease-out"
-          style={{ 
-            transform: isHovered ? 'scale(1.02)' : 'scale(1)' 
+          style={{
+            transform: isHovered ? 'scale(1.02)' : 'scale(1)'
           }}
         />
-        
+
         {/* Extremely thin dark vignette just to make the white text pop, maintaining maximum photo brightness */}
         <div className="absolute inset-0 bg-black/25 z-10" />
-        
+
         {/* Vignette styling for a cinematic borderless finish */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 z-10 pointer-events-none" />
       </div>
 
       {/* HTML5 Particle Gravity Canvas Overlay (Google Antigravity style) */}
-      <canvas 
+      <canvas
         ref={canvasRef}
         className="absolute inset-0 z-10 pointer-events-none"
       />
 
       {/* Interactive Cyber Security Tech Hotspots - Hover to discover office areas */}
       <div className="absolute inset-0 z-20 pointer-events-none hidden md:block">
-        
+
         {/* Hotspot 1 - Giancarlo (Left side) */}
         <div className="absolute top-[32%] left-[10%] pointer-events-auto group/spot">
           <span className="absolute -inset-2 inline-flex h-8 w-8 rounded-full bg-red-600 opacity-75 animate-ping cursor-pointer" />
@@ -266,9 +266,10 @@ const OfficeSection = () => {
             Nuestras oficinas físicas en Nariño son el corazón de nuestra operación. Aquí, cada dispositivo es verificado bajo estrictos estándares de seguridad para garantizar que recibes exactamente lo que esperas.
           </p>
 
+
           {/* Compact Frosted Glass Features placed at the bottom where they don't cover faces */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mt-6">
-            
+
             {/* Feature 1 */}
             <div className="p-6 rounded-2xl border border-white/10 bg-black/35 backdrop-blur-md hover:border-red-600/30 hover:bg-black/60 transition-all duration-300 group text-left flex items-start gap-4 shadow-2xl">
               <div className="w-10 h-10 rounded-xl bg-red-600/10 border border-red-600/20 flex items-center justify-center shrink-0 text-red-500 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 font-mono font-bold text-xs">

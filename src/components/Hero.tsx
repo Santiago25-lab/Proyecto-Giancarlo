@@ -17,6 +17,58 @@ const Hero = () => {
   const giancarloRef = useRef<HTMLImageElement>(null);   // entrance target
   const logoRef = useRef<HTMLDivElement>(null);
   const scrollLineRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Programmatic autoplay and interaction fallback for mobile devices (like iOS Safari)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Force load the video resource
+    video.load();
+
+    // Fallback timeout to dispatch the heroVideoEnded event in case autoplay fails
+    // or video is blocked/stuck, so the navbar is not left in a completely transparent state.
+    const fallbackTimeout = setTimeout(() => {
+      window.dispatchEvent(new Event('heroVideoEnded'));
+    }, 4500); // 4.5 seconds fallback
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          // Playback started successfully, clear the timeout
+          clearTimeout(fallbackTimeout);
+        })
+        .catch((error) => {
+          console.warn('Autoplay prevented by browser, listening for user interaction:', error);
+
+          // Fallback: try playing on any user interaction (touchstart, scroll, click)
+          const playOnInteraction = () => {
+            video.play()
+              .then(() => {
+                clearTimeout(fallbackTimeout);
+                cleanup();
+              })
+              .catch(() => {});
+          };
+
+          const cleanup = () => {
+            window.removeEventListener('touchstart', playOnInteraction);
+            window.removeEventListener('scroll', playOnInteraction);
+            window.removeEventListener('click', playOnInteraction);
+          };
+
+          window.addEventListener('touchstart', playOnInteraction, { passive: true });
+          window.addEventListener('scroll', playOnInteraction, { passive: true });
+          window.addEventListener('click', playOnInteraction, { passive: true });
+        });
+    }
+
+    return () => {
+      clearTimeout(fallbackTimeout);
+    };
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -147,14 +199,15 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center bg-white"
     >
-      {/* Background Video — always rendered; preload=none lets mobile browsers be smart about buffering */}
+      {/* Background Video — always rendered; preload=auto ensures it plays immediately on mobile */}
       <div className="hero-video absolute inset-0 z-0 overflow-hidden">
         <video
+          ref={videoRef}
           autoPlay
           muted
           playsInline
           suppressHydrationWarning
-          preload="none"
+          preload="auto"
           className="w-full h-full object-cover"
           onEnded={() => window.dispatchEvent(new Event('heroVideoEnded'))}
         >
