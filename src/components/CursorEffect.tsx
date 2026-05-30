@@ -27,7 +27,13 @@ export default function CursorEffect() {
   const isHoveringRef = useRef(false);
   const ringRafRef = useRef<number>(0);
 
+  // Skip entirely on touch/mobile — no cursor exists, saves significant CPU/GPU
+  const isMobile =
+    typeof window !== 'undefined' &&
+    ('ontouchstart' in window || window.innerWidth < 768);
+
   useEffect(() => {
+    if (isMobile) return; // nothing to do on touch devices
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -185,6 +191,9 @@ export default function CursorEffect() {
       cancelAnimationFrame(ringRafRef.current);
     };
   }, []);
+
+  // No cursor UI on touch devices
+  if (isMobile) return null;
 
   return (
     <>

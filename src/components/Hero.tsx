@@ -1,10 +1,15 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Helper: returns true if user is on a touch/mobile device
+const isMobileDevice = () =>
+  typeof window !== 'undefined' &&
+  (window.innerWidth < 768 || 'ontouchstart' in window);
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,17 +18,27 @@ const Hero = () => {
   const logoRef = useRef<HTMLDivElement>(null);
   const scrollLineRef = useRef<HTMLDivElement>(null);
 
+  const [showVideo, setShowVideo] = useState(false);
+
+  // Delay video load slightly so the page can render first (helps mobile)
+  useEffect(() => {
+    if (isMobileDevice()) return; // Skip video on mobile entirely — use poster
+    const timer = setTimeout(() => setShowVideo(true), 200);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current) return;
+    const mobile = isMobileDevice();
 
     const ctx = gsap.context(() => {
       // Set initial states explicitly inside the context
       gsap.set([giancarloRef.current, logoRef.current, '.accessory', scrollLineRef.current], {
         opacity: 0,
-        visibility: 'visible', // Ensure it's rendered
+        visibility: 'visible',
       });
-      gsap.set(giancarloRef.current, { y: 80, scale: 0.94 });
-      gsap.set(logoRef.current, { y: 30, scale: 0.88 });
+      gsap.set(giancarloRef.current, { y: mobile ? 40 : 80, scale: 0.94 });
+      gsap.set(logoRef.current, { y: mobile ? 20 : 30, scale: 0.88 });
       gsap.set('.accessory', { y: 20 });
 
       // --- Entrance timeline (runs once, never reverses) ---
@@ -33,86 +48,97 @@ const Hero = () => {
         y: 0,
         opacity: 1,
         scale: 1,
-        duration: 1.6,
-        delay: 0.3,
+        duration: mobile ? 1.0 : 1.6,
+        delay: 0.2,
         onComplete: () => gsap.set(giancarloRef.current, { clearProps: 'y,scale' }),
       })
         .to(
           logoRef.current,
-          { y: 0, opacity: 1, scale: 1, duration: 1.2,
+          { y: 0, opacity: 1, scale: 1, duration: mobile ? 0.8 : 1.2,
             onComplete: () => gsap.set(logoRef.current, { clearProps: 'y,scale' }),
           },
-          '-=0.9'
-        )
-        .to(
-          '.accessory',
-          { opacity: 1, y: 0, stagger: 0.12, duration: 0.8 },
           '-=0.7'
         )
         .to(
+          '.accessory',
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.6 },
+          '-=0.5'
+        )
+        .to(
           scrollLineRef.current,
-          { opacity: 0.3, scaleY: 1, transformOrigin: 'top center', duration: 0.6 },
-          '-=0.3'
+          { opacity: 0.3, scaleY: 1, transformOrigin: 'top center', duration: 0.5 },
+          '-=0.2'
         );
 
-      // --- Scroll: accessories drift off screen (parallax) ---
-      gsap.to('.accessory', {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.5,
-        },
-        y: (i) => (i + 1) * 80,
-        x: (i) => (i % 2 === 0 ? -20 : 20),
-        opacity: 0,
-        scale: 0.8,
-      });
+      // Skip heavy scroll-based parallax on mobile to prevent lag
+      if (!mobile) {
+        // --- Scroll: accessories drift off screen (parallax) ---
+        gsap.to('.accessory', {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1.5,
+          },
+          y: (i) => (i + 1) * 80,
+          x: (i) => (i % 2 === 0 ? -20 : 20),
+          opacity: 0,
+          scale: 0.8,
+        });
 
-      // --- Scroll: video subtle scale (parallax) ---
-      gsap.to('.hero-video', {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-        scale: 1.1,
-      });
+        // --- Scroll: video subtle scale (parallax) — desktop only ---
+        gsap.to('.hero-video', {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+          scale: 1.08, // Reduced from 1.1 to lessen GPU load
+        });
 
-      // --- Scroll: Giancarlo wrapper (not image itself) drifts up slightly ---
-      gsap.to(giancarloWrapRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
-        y: -50,
-      });
+        // --- Scroll: Giancarlo wrapper drifts up slightly --- desktop only
+        gsap.to(giancarloWrapRef.current, {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+          y: -50,
+        });
+      }
 
     }, containerRef);
 
-    // --- Mouse parallax: uses separate wrapper, no conflict with entrance ---
+    // --- Mouse parallax: desktop only (no touch devices) ---
+    if (mobile) {
+      return () => ctx.revert();
+    }
+
+    let rafId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const nx = (e.clientX / innerWidth - 0.5) * 2;
-      const ny = (e.clientY / innerHeight - 0.5) * 2;
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const { innerWidth, innerHeight } = window;
+        const nx = (e.clientX / innerWidth - 0.5) * 2;
+        const ny = (e.clientY / innerHeight - 0.5) * 2;
 
-      gsap.to(giancarloWrapRef.current, {
-        x: nx * 16,
-        rotateY: nx * 4,
-        rotateX: -ny * 3,
-        duration: 1.2,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
+        gsap.to(giancarloWrapRef.current, {
+          x: nx * 16,
+          rotateY: nx * 4,
+          rotateX: -ny * 3,
+          duration: 1.2,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
 
-      gsap.to(logoRef.current, {
-        x: nx * 7,
-        duration: 1.5,
-        ease: 'power2.out',
-        overwrite: 'auto',
+        gsap.to(logoRef.current, {
+          x: nx * 7,
+          duration: 1.5,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
       });
     };
 
@@ -120,6 +146,7 @@ const Hero = () => {
 
     return () => {
       ctx.revert();
+      cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
@@ -129,18 +156,25 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center bg-white"
     >
-      {/* Background Video */}
+      {/* Background Video — desktop only; mobile shows a static poster to prevent lag */}
       <div className="hero-video absolute inset-0 z-0 overflow-hidden">
-        <video 
-          autoPlay 
-          muted 
-          playsInline 
-          suppressHydrationWarning
-          className="w-full h-full object-cover"
-          onEnded={() => window.dispatchEvent(new Event('heroVideoEnded'))}
-        >
-          <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
-        </video>
+        {showVideo ? (
+          <video
+            autoPlay
+            muted
+            playsInline
+            suppressHydrationWarning
+            preload="metadata"
+            className="w-full h-full object-cover"
+            onEnded={() => window.dispatchEvent(new Event('heroVideoEnded'))}
+          >
+            {/* WebM first (smaller file, better performance), MP4 as fallback */}
+            <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          /* Mobile / pre-load: static gradient background — zero GPU cost */
+          <div className="w-full h-full bg-gradient-to-br from-gray-950 via-gray-900 to-black" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60 z-10" />
       </div>
 
@@ -169,11 +203,11 @@ const Hero = () => {
           className="relative w-full flex justify-center items-end"
           style={{ height: '75vh', maxHeight: '620px', perspective: '800px' }}
         >
-          {/* Parallax wrapper (mouse + scroll move this) */}
+          {/* Parallax wrapper (mouse + scroll move this) — perspective disabled on mobile */}
           <div
             ref={giancarloWrapRef}
             className="absolute inset-0 flex items-end justify-center z-10"
-            style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
+            style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Image itself (entrance animation targets this) */}
             <img
