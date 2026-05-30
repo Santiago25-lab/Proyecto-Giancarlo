@@ -211,6 +211,11 @@ const Hero = () => {
           className="w-full h-full object-cover"
           onEnded={() => window.dispatchEvent(new Event('heroVideoEnded'))}
         >
+          {/* WebM transparent video for Chrome/Firefox/Android/Windows */}
+          <source src="/explocion-suave-iphone-transparent.webm" type="video/webm" />
+          {/* HEVC transparent video for Safari/iOS/macOS */}
+          <source src="/explocion-suave-iphone-transparent.mov" type="video/quicktime; codecs=hevc" />
+          {/* Fallback standard MP4 (solid background) */}
           <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60 z-10" />

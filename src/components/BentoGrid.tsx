@@ -231,7 +231,6 @@ const CatalogTeaser = () => {
             <video 
               ref={videoElementRef}
               suppressHydrationWarning
-              src="/video-catalogo.mp4" 
               autoPlay 
               loop 
               muted 
@@ -239,7 +238,14 @@ const CatalogTeaser = () => {
               preload="auto"
               className="w-[120%] h-[120%] object-contain transition-transform duration-700 group-hover:scale-105"
               style={{ filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.15))' }}
-            />
+            >
+              {/* WebM transparent video for Chrome/Firefox/Android/Windows */}
+              <source src="/video-catalogo-transparent.webm" type="video/webm" />
+              {/* HEVC transparent video for Safari/iOS/macOS */}
+              <source src="/video-catalogo-transparent.mov" type="video/quicktime; codecs=hevc" />
+              {/* Fallback standard MP4 (solid background) */}
+              <source src="/video-catalogo.mp4" type="video/mp4" />
+            </video>
           </motion.div>
         </div>
 
