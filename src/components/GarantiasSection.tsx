@@ -1,11 +1,32 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitType from 'split-type';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const FRAMES = [
+  '/airpods fotograma 1.png',
+  '/airpods fotograma 2.png',
+  '/airpods fotograma 3.png',
+  '/airpods fotograma 4.png',
+];
+
+const MAX_FRAMES = [
+  '/aipods max fotograma 1.png',
+  '/airpods max fotograma 2.png',
+  '/airpods max fotograma 3.png',
+  '/airpods max fotograma 4.png',
+];
+
+const IPAD_FRAMES = [
+  '/aipad fotograma 1.png',
+  '/aipad fotograma 2.png',
+  '/aipad fotograma 3.png',
+  '/aipad fotograma 4.png',
+];
 
 const GarantiasSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -13,6 +34,13 @@ const GarantiasSection = () => {
   const subRef = useRef<HTMLParagraphElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const airpodsRef = useRef<HTMLDivElement>(null);
+  const airpodsMaxRef = useRef<HTMLDivElement>(null);
+  const ipadRef = useRef<HTMLDivElement>(null);
+  const iphoneRef = useRef<HTMLDivElement>(null);
+  const [frame, setFrame] = useState(0);
+  const [maxFrame, setMaxFrame] = useState(0);
+  const [ipadFrame, setIpadFrame] = useState(0);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -37,7 +65,7 @@ const GarantiasSection = () => {
         });
       }
 
-      // --- Subtext line reveal ---
+      // --- Subtext reveal ---
       if (subRef.current) {
         gsap.from(subRef.current, {
           opacity: 0,
@@ -52,7 +80,7 @@ const GarantiasSection = () => {
         });
       }
 
-      // --- Red line width expand ---
+      // --- Red line expand ---
       if (lineRef.current) {
         gsap.from(lineRef.current, {
           scaleX: 0,
@@ -67,7 +95,7 @@ const GarantiasSection = () => {
         });
       }
 
-      // --- Cards stagger from below with 3D flip ---
+      // --- Cards stagger ---
       if (cardsRef.current) {
         const cards = cardsRef.current.querySelectorAll('.garantia-card');
         gsap.from(cards, {
@@ -85,7 +113,6 @@ const GarantiasSection = () => {
           },
         });
 
-        // Hover tilt per card
         cards.forEach((card) => {
           const el = card as HTMLElement;
           el.addEventListener('mouseenter', () => {
@@ -96,6 +123,49 @@ const GarantiasSection = () => {
           });
         });
       }
+
+      // --- Animación unificada de los dispositivos (AirPods, iPad) ---
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: cardsRef.current,
+          start: 'top 75%', // Inicia cuando las tarjetas llegan al 75% de la pantalla
+          once: true, // Solo ocurre una vez
+        },
+      });
+
+      // Posición inicial escondida detrás de las tarjetas
+      if (airpodsMaxRef.current) gsap.set(airpodsMaxRef.current, { y: 150 });
+      if (ipadRef.current) gsap.set(ipadRef.current, { y: 150 });
+      if (iphoneRef.current) gsap.set(iphoneRef.current, { y: 150 });
+      if (airpodsRef.current) gsap.set(airpodsRef.current, { y: 150 });
+
+      // Suben los 4 al mismo tiempo
+      tl.to(
+        [airpodsMaxRef.current, ipadRef.current, iphoneRef.current, airpodsRef.current],
+        {
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+        },
+        0
+      );
+
+      // Animamos los frames al mismo tiempo que suben
+      tl.to(
+        { val: 0 },
+        {
+          val: 3, // El índice máximo de los frames (0 a 3)
+          duration: 1.2,
+          ease: 'none',
+          onUpdate: function () {
+            const idx = Math.round(this.targets()[0].val);
+            setMaxFrame(idx);
+            setIpadFrame(idx);
+            setFrame(idx);
+          },
+        },
+        0
+      );
 
     }, sectionRef);
 
@@ -143,11 +213,12 @@ const GarantiasSection = () => {
 
   return (
     <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden bg-white">
-      {/* Background decoration */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-red-600/5 blur-[100px] rounded-full -z-10" />
 
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+
+        {/* Header SIN audífonos */}
+        <div className="relative text-center mb-16">
           <h2
             ref={headingRef}
             className="text-4xl md:text-6xl font-black tracking-tighter text-black mb-4"
@@ -161,21 +232,110 @@ const GarantiasSection = () => {
           <div ref={lineRef} className="h-1 w-24 bg-red-600 mx-auto rounded-full mt-6" />
         </div>
 
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {cards.map((card, i) => (
-            <div
-              key={i}
-              className="garantia-card p-8 rounded-3xl bg-gray-50 border border-black/5 hover:border-red-600/20 hover:shadow-xl hover:shadow-red-600/5 transition-colors duration-300 group cursor-default"
-              style={{ willChange: 'transform' }}
-            >
-              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300">
-                {card.icon}
+        {/* Contenedor principal de tarjetas y dispositivos */}
+        <div className="relative mt-32">
+          
+          {/* Capa de dispositivos (Fondo) - Totalmente separada y detrás de las tarjetas */}
+          <div className="absolute inset-0 z-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pointer-events-none">
+            {/* Columna 1: AirPods Max */}
+            <div className="relative w-full h-full">
+              <div
+                ref={airpodsMaxRef}
+                className="hidden lg:block absolute -top-32 left-1/2 -translate-x-1/2 w-48"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative w-full aspect-square">
+                  {MAX_FRAMES.map((src, fi) => (
+                    <img
+                      key={src}
+                      src={src}
+                      alt={`AirPods Max frame ${fi + 1}`}
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-150"
+                      style={{ opacity: maxFrame === fi ? 1 : 0 }}
+                    />
+                  ))}
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-black mb-3">{card.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{card.desc}</p>
             </div>
-          ))}
+
+            {/* Columna 2: iPad */}
+            <div className="relative w-full h-full">
+              <div
+                ref={ipadRef}
+                className="hidden lg:block absolute -top-32 left-1/2 -translate-x-1/2 w-40"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative w-full aspect-[3/4]">
+                  {IPAD_FRAMES.map((src, fi) => (
+                    <img
+                      key={src}
+                      src={src}
+                      alt={`iPad frame ${fi + 1}`}
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-150"
+                      style={{ opacity: ipadFrame === fi ? 1 : 0 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Columna 3: iPhone */}
+            <div className="relative w-full h-full">
+              <div
+                ref={iphoneRef}
+                className="hidden lg:block absolute -top-40 left-1/2 -translate-x-1/2 w-48"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative w-full aspect-[3/4]">
+                  <img
+                    src="/iphone 17 pro max fotograma.png"
+                    alt="iPhone 17 Pro Max"
+                    className="absolute inset-0 w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Columna 4: AirPods Pro */}
+            <div className="relative w-full h-full">
+              <div
+                ref={airpodsRef}
+                className="hidden lg:block absolute -top-32 left-1/2 -translate-x-1/2 w-48"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="relative w-full aspect-square">
+                  {FRAMES.map((src, fi) => (
+                    <img
+                      key={src}
+                      src={src}
+                      alt={`AirPods frame ${fi + 1}`}
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-150"
+                      style={{ opacity: frame === fi ? 1 : 0 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Cards (Frente) */}
+          <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+            {cards.map((card, i) => (
+              <div
+                key={i}
+                className="garantia-card relative p-8 rounded-3xl bg-gray-50 border border-black/5 hover:border-red-600/20 hover:shadow-xl hover:shadow-red-600/5 transition-colors duration-300 group cursor-default"
+                style={{ willChange: 'transform' }}
+              >
+                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300 relative z-20">
+                  {card.icon}
+                </div>
+                <h3 className="text-xl font-bold text-black mb-3 relative z-20">{card.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed relative z-20">{card.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   );

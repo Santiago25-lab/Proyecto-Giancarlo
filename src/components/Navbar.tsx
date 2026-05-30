@@ -6,19 +6,26 @@ import gsap from 'gsap';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
-  // Scroll detection
+  // Scroll detection and video end detection
   useEffect(() => {
     const handleScroll = () => {
-      // Aparece el fondo justo cuando termina de pasar el video (la primera pantalla completa)
       setScrolled(window.scrollY > window.innerHeight - 80);
     };
+    const handleVideoEnded = () => setVideoEnded(true);
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('heroVideoEnded', handleVideoEnded);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('heroVideoEnded', handleVideoEnded);
+    };
   }, []);
 
   // GSAP entrance animation
@@ -64,7 +71,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Inicio', href: '/' },
     { name: 'Catálogo', href: '/catalogo' },
-    { name: 'Agenda', href: '#' },
+    { name: 'Agenda', href: '/agenda' },
     { name: 'Quiénes Somos', href: '#' },
     { name: 'Contáctanos', href: '#' },
   ];
@@ -72,8 +79,8 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${
-        scrolled ? 'bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-sm' : 'bg-transparent border-b border-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out px-6 py-4 ${
+        scrolled || videoEnded ? 'bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-sm' : 'bg-white/0 backdrop-blur-none border-b border-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">

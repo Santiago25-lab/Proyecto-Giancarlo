@@ -131,7 +131,14 @@ const Hero = () => {
     >
       {/* Background Video */}
       <div className="hero-video absolute inset-0 z-0 overflow-hidden">
-        <video autoPlay muted playsInline className="w-full h-full object-cover">
+        <video 
+          autoPlay 
+          muted 
+          playsInline 
+          suppressHydrationWarning
+          className="w-full h-full object-cover"
+          onEnded={() => window.dispatchEvent(new Event('heroVideoEnded'))}
+        >
           <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60 z-10" />

@@ -195,6 +195,7 @@ const CatalogTeaser = () => {
             className="w-full h-full relative z-10 flex items-center justify-center"
           >
             <video 
+              suppressHydrationWarning
               src="/video-catalogo.mp4" 
               autoPlay 
               loop 

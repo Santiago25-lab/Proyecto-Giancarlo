@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# iNariño - Plataforma E-commerce Premium
 
-## Getting Started
+Este proyecto es una aplicación web de alta gama (Landing Page + Catálogo) para una tienda de productos Apple, construida con Next.js, Tailwind CSS y animaciones avanzadas con GSAP.
 
-First, run the development server:
+## Estado Actual (Implementado)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+La aplicación cuenta actualmente con una **Landing Page** altamente pulida, diseñada para dar una sensación de lujo y confianza (estilo Apple):
+1. **Navbar Transparente y Dinámico**: Efecto glassmorphism que reacciona al scroll y al final del video principal.
+2. **Hero Section (Video)**: Un video inmersivo a pantalla completa que presenta la marca.
+3. **Bento Grid**: Una cuadrícula moderna que destaca las principales ventajas competitivas.
+4. **Sección de Garantías (Scroll Animations)**: Tarjetas interactivas con un efecto 3D avanzado donde los dispositivos (AirPods Max, iPad, iPhone 17 Pro Max y AirPods Pro) emergen físicamente de detrás de las tarjetas al hacer scroll, gracias a la integración de GSAP ScrollTrigger.
+5. **Sección de Confianza (Sticky)**: Una sección con efecto "sticky" (pegajoso) que permite revelar suavemente el contenido inferior.
+6. **Smooth Scrolling**: Implementado en toda la página usando Lenis para una navegación fluida.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Próximas Implementaciones (El Plan)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+La siguiente fase del proyecto se enfocará en transformar la Landing Page estática en una plataforma de e-commerce dinámica:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Página de Catálogo (`/catalogo`)
+- **Enrutamiento**: Conectar el enlace "Catálogo" del Navbar para que dirija a una nueva página dedicada.
+- **UI/UX**: Diseñar una cuadrícula de productos premium con filtros y búsqueda.
+- **Datos Dinámicos**: Los productos se cargarán dinámicamente en lugar de estar escritos directamente en el código.
 
-## Learn More
+### 2. Panel de Administrador (`/admin`)
+- **Acceso**: Una ruta oculta y protegida donde el dueño de la tienda pueda gestionar su inventario.
+- **Subida de Catálogo**: Formularios para agregar nuevos productos (título, descripción, precio, categoría, imágenes).
+- **Gestión**: Opciones para editar o eliminar productos existentes.
+- **Infraestructura**: Integración con una base de datos (y almacenamiento de imágenes) para guardar el catálogo real.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Proyecto en desarrollo continuo, priorizando animaciones fluidas y diseño premium.*
