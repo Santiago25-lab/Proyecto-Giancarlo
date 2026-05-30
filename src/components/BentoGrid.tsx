@@ -16,6 +16,40 @@ const CatalogTeaser = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const badgesRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
+  const videoElementRef = useRef<HTMLVideoElement>(null);
+
+  // Force autoplay and handle mobile constraints for the teaser video
+  useEffect(() => {
+    const video = videoElementRef.current;
+    if (!video) return;
+
+    video.load();
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((error) => {
+        console.warn('Catalog teaser video autoplay prevented, waiting for interaction:', error);
+
+        const playOnInteraction = () => {
+          video.play()
+            .then(() => {
+              cleanup();
+            })
+            .catch(() => {});
+        };
+
+        const cleanup = () => {
+          window.removeEventListener('touchstart', playOnInteraction);
+          window.removeEventListener('scroll', playOnInteraction);
+          window.removeEventListener('click', playOnInteraction);
+        };
+
+          window.addEventListener('touchstart', playOnInteraction, { passive: true });
+          window.addEventListener('scroll', playOnInteraction, { passive: true });
+          window.addEventListener('click', playOnInteraction, { passive: true });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -195,12 +229,14 @@ const CatalogTeaser = () => {
             className="w-full h-full relative z-10 flex items-center justify-center"
           >
             <video 
+              ref={videoElementRef}
               suppressHydrationWarning
               src="/video-catalogo.mp4" 
               autoPlay 
               loop 
               muted 
               playsInline
+              preload="auto"
               className="w-[120%] h-[120%] object-contain transition-transform duration-700 group-hover:scale-105"
               style={{ filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.15))' }}
             />
