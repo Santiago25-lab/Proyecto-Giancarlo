@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -17,15 +17,6 @@ const Hero = () => {
   const giancarloRef = useRef<HTMLImageElement>(null);   // entrance target
   const logoRef = useRef<HTMLDivElement>(null);
   const scrollLineRef = useRef<HTMLDivElement>(null);
-
-  const [showVideo, setShowVideo] = useState(false);
-
-  // Delay video load slightly so the page can render first (helps mobile)
-  useEffect(() => {
-    if (isMobileDevice()) return; // Skip video on mobile entirely — use poster
-    const timer = setTimeout(() => setShowVideo(true), 200);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -156,25 +147,19 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center bg-white"
     >
-      {/* Background Video — desktop only; mobile shows a static poster to prevent lag */}
+      {/* Background Video — always rendered; preload=none lets mobile browsers be smart about buffering */}
       <div className="hero-video absolute inset-0 z-0 overflow-hidden">
-        {showVideo ? (
-          <video
-            autoPlay
-            muted
-            playsInline
-            suppressHydrationWarning
-            preload="metadata"
-            className="w-full h-full object-cover"
-            onEnded={() => window.dispatchEvent(new Event('heroVideoEnded'))}
-          >
-            {/* WebM first (smaller file, better performance), MP4 as fallback */}
-            <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
-          </video>
-        ) : (
-          /* Mobile / pre-load: static gradient background — zero GPU cost */
-          <div className="w-full h-full bg-gradient-to-br from-gray-950 via-gray-900 to-black" />
-        )}
+        <video
+          autoPlay
+          muted
+          playsInline
+          suppressHydrationWarning
+          preload="none"
+          className="w-full h-full object-cover"
+          onEnded={() => window.dispatchEvent(new Event('heroVideoEnded'))}
+        >
+          <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60 z-10" />
       </div>
 
