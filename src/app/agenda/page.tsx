@@ -33,38 +33,26 @@ export default function AgendaPage() {
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Entrance animations on Mount
+  // Entrance animations on Mount (using fromTo & clearProps for maximum safety)
   useEffect(() => {
     if (!success) {
       const ctx = gsap.context(() => {
-        gsap.from('.vip-badge', {
-          y: -25,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out'
-        });
-        gsap.from('.agenda-title', {
-          y: 35,
-          opacity: 0,
-          duration: 1,
-          delay: 0.1,
-          ease: 'power3.out'
-        });
-        gsap.from('.agenda-desc', {
-          y: 20,
-          opacity: 0,
-          duration: 1,
-          delay: 0.25,
-          ease: 'power3.out'
-        });
-        gsap.from('.step-card', {
-          y: 45,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          delay: 0.35,
-          ease: 'power3.out'
-        });
+        gsap.fromTo('.vip-badge', 
+          { y: -25, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', clearProps: 'all' }
+        );
+        gsap.fromTo('.agenda-title', 
+          { y: 35, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, delay: 0.1, ease: 'power3.out', clearProps: 'all' }
+        );
+        gsap.fromTo('.agenda-desc', 
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, delay: 0.25, ease: 'power3.out', clearProps: 'all' }
+        );
+        gsap.fromTo('.step-card', 
+          { y: 45, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, delay: 0.35, ease: 'power3.out', clearProps: 'all' }
+        );
       }, containerRef);
       return () => ctx.revert();
     }
