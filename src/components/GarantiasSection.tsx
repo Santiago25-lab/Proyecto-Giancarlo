@@ -47,15 +47,12 @@ const GarantiasSection = () => {
 
     const ctx = gsap.context(() => {
 
-      // --- Heading split reveal ---
+      // --- Heading reveal ---
       if (headingRef.current) {
-        const split = new SplitType(headingRef.current, { types: 'chars' });
-        gsap.from(split.chars, {
+        gsap.from(headingRef.current, {
           opacity: 0,
-          y: 60,
-          rotateX: -80,
-          stagger: 0.025,
-          duration: 0.7,
+          y: 40,
+          duration: 0.8,
           ease: 'expo.out',
           scrollTrigger: {
             trigger: headingRef.current,
