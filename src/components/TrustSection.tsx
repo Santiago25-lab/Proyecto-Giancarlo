@@ -175,7 +175,7 @@ const TrustSection = () => {
               className="text-4xl md:text-6xl font-black tracking-tighter mb-6 leading-tight flex flex-col items-start"
               style={{ perspective: '1200px' }}
             >
-              <span ref={headingTopRef} className="block">PORQUE TU</span>
+              <span ref={headingTopRef} className="block metallic-text">PORQUE TU</span>
 
               {/* Animated word carousel */}
               <span className="relative h-[1.3em] w-full overflow-hidden flex items-center py-2" style={{ perspective: '1200px' }}>
@@ -186,7 +186,7 @@ const TrustSection = () => {
                     animate={{ y: 0, opacity: 1, rotateX: 0, z: 0, filter: 'blur(0px)' }}
                     exit={{ y: -50, opacity: 0, rotateX: 70, z: -60, filter: 'blur(6px)' }}
                     transition={{ type: 'spring', stiffness: 140, damping: 14, mass: 0.8 }}
-                    className="absolute text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-800 select-none origin-center"
+                    className="absolute text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-800 metallic-text-red select-none origin-center"
                     style={{ backfaceVisibility: 'hidden', transformStyle: 'preserve-3d' }}
                   >
                     {words[index]}

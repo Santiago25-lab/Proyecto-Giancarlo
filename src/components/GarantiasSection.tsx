@@ -237,10 +237,10 @@ const GarantiasSection = () => {
         <div className="relative text-center mb-16">
           <h2
             ref={headingRef}
-            className="text-4xl md:text-6xl font-black tracking-tighter text-black dark:text-white mb-4 transition-colors duration-500 metallic-text"
+            className="text-4xl md:text-6xl font-black tracking-tighter mb-4 transition-colors duration-500"
             style={{ perspective: '800px' }}
           >
-            NUESTRAS <span className="text-red-600">GARANTÍAS</span>
+            <span className="text-black dark:text-white metallic-text">NUESTRAS</span> <span className="text-red-600 metallic-text-red">GARANTÍAS</span>
           </h2>
           <p ref={subRef} className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors duration-500">
             &ldquo;No me compran por precio. Me compran por seguridad.&rdquo;

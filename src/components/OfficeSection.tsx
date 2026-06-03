@@ -258,8 +258,8 @@ const OfficeSection = () => {
 
           {/* High-Contrast Large Typographical Header floating cleanly over the office photo */}
           <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-none drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-            MÁS QUE UNA EMPRESA, <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-800">UN EQUIPO.</span>
+            <span className="metallic-text">MÁS QUE UNA EMPRESA,</span> <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-800 metallic-text-red">UN EQUIPO.</span>
           </h2>
 
           <p ref={textRef} className="text-gray-100 text-lg md:text-2xl mb-16 leading-relaxed max-w-3xl font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">

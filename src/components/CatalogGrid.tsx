@@ -208,8 +208,8 @@ export default function CatalogGrid() {
           <span className="brand-badge text-red-600 font-bold uppercase tracking-wider text-xs md:text-sm flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-red-600" /> 100% Originales & Garantizados
           </span>
-          <h2 className="brand-title text-4xl md:text-6xl font-black tracking-tighter text-black dark:text-white mt-2 transition-colors duration-500">
-            EXCLUSIVIDAD <br className="hidden md:inline" /> EN TU <span className="text-red-600">MANO</span>
+          <h2 className="brand-title text-4xl md:text-6xl font-black tracking-tighter mt-2 transition-colors duration-500">
+            <span className="text-black dark:text-white metallic-text">EXCLUSIVIDAD <br className="hidden md:inline" /> EN TU</span> <span className="text-red-600 metallic-text-red">MANO</span>
           </h2>
         </div>
         <p className="brand-desc text-gray-500 dark:text-gray-400 max-w-md text-sm md:text-base font-medium transition-colors duration-500">

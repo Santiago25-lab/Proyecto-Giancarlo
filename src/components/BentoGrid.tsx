@@ -165,8 +165,8 @@ const CatalogTeaser = () => {
             </span>
           </div>
 
-          <h2 ref={headingRef} className="text-6xl md:text-8xl font-black tracking-tighter text-black dark:text-white mb-6 leading-none transition-colors duration-500 metallic-text" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-            CATÁ<span className="text-transparent bg-clip-text bg-gradient-to-br from-red-500 to-red-800">LOGO</span>
+          <h2 ref={headingRef} className="text-6xl md:text-8xl font-black tracking-tighter mb-6 leading-none transition-colors duration-500" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+            <span className="text-black dark:text-white metallic-text">CATÁ</span><span className="text-transparent bg-clip-text bg-gradient-to-br from-red-500 to-red-800 metallic-text-red">LOGO</span>
           </h2>
           
           <p ref={textRef} className="text-gray-600 dark:text-gray-400 text-lg md:text-xl mb-10 leading-relaxed max-w-lg font-light transition-colors duration-500">

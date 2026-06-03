@@ -128,8 +128,8 @@ export default function AgendaPage() {
           <span className="vip-badge text-red-600 font-bold uppercase tracking-wider text-xs md:text-sm flex items-center justify-center gap-2 mb-2">
             <ShieldCheck className="w-5 h-5 text-red-600" /> Reserva Tu Asesoría VIP
           </span>
-          <h1 className="agenda-title text-4xl md:text-6xl font-black tracking-tighter uppercase text-black dark:text-white transition-colors duration-500">
-            AGENDA TU <span className="text-red-600">CITA</span>
+          <h1 className="agenda-title text-4xl md:text-6xl font-black tracking-tighter uppercase transition-colors duration-500">
+            <span className="metallic-text text-black dark:text-white">AGENDA TU</span> <span className="text-red-600 metallic-text-red">CITA</span>
           </h1>
           <p className="agenda-desc text-gray-500 dark:text-gray-400 max-w-lg mx-auto mt-3 text-sm md:text-base font-medium transition-colors duration-500">
             Reserva una cita presencial u online con nuestros asesores certificados Apple y recibe una atención a tu altura.
