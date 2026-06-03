@@ -248,8 +248,8 @@ const GarantiasSection = () => {
         {/* Contenedor principal de tarjetas y dispositivos */}
         <div className="relative mt-32">
           
-          {/* Capa de dispositivos (Fondo) - Totalmente separada y detrás de las tarjetas */}
-          <div className="absolute inset-0 z-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pointer-events-none">
+          {/* Capa de dispositivos - Frente a las tarjetas */}
+          <div className="absolute inset-0 z-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pointer-events-none">
             {/* Columna 1: AirPods Max */}
             <div className="relative w-full h-full">
               <div
