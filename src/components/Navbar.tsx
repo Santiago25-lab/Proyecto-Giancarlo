@@ -94,7 +94,18 @@ const Navbar = () => {
           <div className="hidden sm:flex w-8 h-8 shrink-0 bg-red-600 rounded-lg items-center justify-center shadow-md">
             <span className="text-white font-black text-xs">iN</span>
           </div>
-          <img src="/Logo inariño.png" alt="iNARIÑO Logo" className="h-7 sm:h-10 md:h-12 w-auto object-contain dark:brightness-0 dark:invert transition-all duration-500" />
+          {/* Logo claro (modo light) */}
+          <img
+            src="/Logo inariño.png"
+            alt="iNARIÑO Logo"
+            className="h-7 sm:h-10 md:h-12 w-auto object-contain block dark:hidden transition-all duration-500"
+          />
+          {/* Logo blanco (modo dark) */}
+          <img
+            src="/Logo inariño blanco.png"
+            alt="iNARIÑO Logo"
+            className="h-7 sm:h-10 md:h-12 w-auto object-contain hidden dark:block transition-all duration-500"
+          />
         </div>
 
         {/* Desktop Links */}
