@@ -275,13 +275,13 @@ const Hero = () => {
             <img
               src="/Logo inariño.png"
               alt="iNARIÑO Logo"
-              className="w-72 md:w-[480px] object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.25)] block dark:hidden transition-all duration-500"
+              className="w-72 md:w-[480px] object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.25)] block dark:hidden transition-all duration-500 metallic-logo"
             />
             {/* Logo blanco (modo dark) */}
             <img
               src="/Logo inariño blanco.png"
               alt="iNARIÑO Logo"
-              className="w-72 md:w-[480px] object-contain drop-shadow-[0_10px_40px_rgba(255,255,255,0.1)] hidden dark:block transition-all duration-500"
+              className="w-72 md:w-[480px] object-contain drop-shadow-[0_10px_40px_rgba(255,255,255,0.1)] hidden dark:block transition-all duration-500 metallic-logo"
             />
           </div>
         </div>

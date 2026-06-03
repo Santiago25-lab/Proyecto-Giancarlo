@@ -98,13 +98,13 @@ const Navbar = () => {
           <img
             src="/Logo inariño.png"
             alt="iNARIÑO Logo"
-            className="h-7 sm:h-10 md:h-12 w-auto object-contain block dark:hidden transition-all duration-500"
+            className="h-7 sm:h-10 md:h-12 w-auto object-contain block dark:hidden transition-all duration-500 metallic-logo"
           />
           {/* Logo blanco (modo dark) */}
           <img
             src="/Logo inariño blanco.png"
             alt="iNARIÑO Logo"
-            className="h-7 sm:h-10 md:h-12 w-auto object-contain hidden dark:block transition-all duration-500"
+            className="h-7 sm:h-10 md:h-12 w-auto object-contain hidden dark:block transition-all duration-500 metallic-logo"
           />
         </div>
 
