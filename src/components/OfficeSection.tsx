@@ -49,7 +49,9 @@ const OfficeSection = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
-    if (!canvas || !container) return;
+    
+    // Optimización móvil: Deshabilitar canvas en pantallas pequeñas
+    if (!canvas || !container || window.innerWidth <= 768) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;

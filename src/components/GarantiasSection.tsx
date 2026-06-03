@@ -95,30 +95,40 @@ const GarantiasSection = () => {
       // --- Cards stagger ---
       if (cardsRef.current) {
         const cards = cardsRef.current.querySelectorAll('.garantia-card');
-        gsap.fromTo(
-          cards,
-          {
-            opacity: 0,
-            y: 80,
-            rotateY: 25,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            rotateY: 0,
-            transformOrigin: 'left center',
-            stagger: 0.12,
-            duration: 0.9,
-            ease: 'expo.out',
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: 'top 95%',
-              once: true,
-              invalidateOnRefresh: true,
+        
+        let mm = gsap.matchMedia();
+        
+        mm.add({
+          isDesktop: "(min-width: 768px)",
+          isMobile: "(max-width: 767px)"
+        }, (context) => {
+          let { isDesktop } = context.conditions as any;
+          
+          gsap.fromTo(
+            cards,
+            {
+              opacity: 0,
+              y: 80,
+              rotateY: isDesktop ? 25 : 0, // No 3D rotation on mobile
             },
-          }
-        );
+            {
+              opacity: 1,
+              y: 0,
+              rotateY: 0,
+              transformOrigin: 'left center',
+              stagger: 0.12,
+              duration: 0.9,
+              ease: 'expo.out',
+              immediateRender: false,
+              scrollTrigger: {
+                trigger: cardsRef.current,
+                start: 'top 95%',
+                once: true,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        });
 
         cards.forEach((card) => {
           const el = card as HTMLElement;
