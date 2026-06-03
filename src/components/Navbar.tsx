@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -81,7 +82,9 @@ const Navbar = () => {
     <nav
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out px-6 py-4 ${
-        scrolled || videoEnded ? 'bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-sm' : 'bg-white/0 backdrop-blur-none border-b border-transparent'
+        scrolled || videoEnded
+          ? 'bg-white/40 dark:bg-black/40 backdrop-blur-2xl border-b border-white/20 dark:border-white/5 shadow-sm'
+          : 'bg-white/0 dark:bg-black/0 backdrop-blur-none border-b border-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -91,7 +94,7 @@ const Navbar = () => {
           <div className="hidden sm:flex w-8 h-8 shrink-0 bg-red-600 rounded-lg items-center justify-center shadow-md">
             <span className="text-white font-black text-xs">iN</span>
           </div>
-          <img src="/Logo inariño.png" alt="iNARIÑO Logo" className="h-7 sm:h-10 md:h-12 w-auto object-contain" />
+          <img src="/Logo inariño.png" alt="iNARIÑO Logo" className="h-7 sm:h-10 md:h-12 w-auto object-contain dark:brightness-0 dark:invert transition-all duration-500" />
         </div>
 
         {/* Desktop Links */}
@@ -100,7 +103,7 @@ const Navbar = () => {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-semibold text-black hover:text-red-600 transition-colors duration-300 relative group"
+              className="text-sm font-semibold text-black dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-colors duration-300 relative group"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full" />
@@ -110,6 +113,9 @@ const Navbar = () => {
 
         {/* Desktop & Mobile CTA / Menu Toggle */}
         <div ref={ctaRef} className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
           {/* WhatsApp Button */}
           <a
             href="https://wa.me/573215886915"
@@ -126,13 +132,13 @@ const Navbar = () => {
           {/* Mobile Menu Hamburger Toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 text-black hover:text-red-600 focus:outline-none transition duration-300 z-50 relative bg-white/60 backdrop-blur-md border border-black/5 rounded-full"
+            className="md:hidden p-2 text-black dark:text-white hover:text-red-600 dark:hover:text-red-500 focus:outline-none transition duration-300 z-50 relative bg-white/60 dark:bg-white/10 backdrop-blur-md border border-black/5 dark:border-white/10 rounded-full"
             aria-label="Menu"
           >
             <div className="w-5 h-4 flex flex-col justify-between items-center relative">
-              <span className={`w-5 h-0.5 bg-black transition-all duration-300 rounded-full ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-              <span className={`w-5 h-0.5 bg-black transition-all duration-300 rounded-full ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`w-5 h-0.5 bg-black transition-all duration-300 rounded-full ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+              <span className={`w-5 h-0.5 bg-black dark:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+              <span className={`w-5 h-0.5 bg-black dark:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`w-5 h-0.5 bg-black dark:bg-white transition-all duration-300 rounded-full ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
             </div>
           </button>
         </div>
@@ -141,7 +147,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown Panel */}
       <div
-        className={`fixed top-0 left-0 right-0 h-screen bg-white/95 backdrop-blur-2xl z-40 flex flex-col justify-center items-center gap-8 transition-all duration-500 md:hidden ${
+        className={`fixed top-0 left-0 right-0 h-screen bg-white/95 dark:bg-black/95 backdrop-blur-2xl z-40 flex flex-col justify-center items-center gap-8 transition-all duration-500 md:hidden ${
           menuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-10 invisible pointer-events-none'
         }`}
       >
@@ -151,7 +157,7 @@ const Navbar = () => {
               key={link.name}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-2xl font-black text-black hover:text-red-600 transition-all uppercase tracking-tight"
+              className="text-2xl font-black text-black dark:text-white hover:text-red-600 dark:hover:text-red-500 transition-all uppercase tracking-tight"
               style={{
                 transitionDelay: `${idx * 50}ms`
               }}

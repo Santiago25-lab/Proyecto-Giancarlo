@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function CatalogoPage() {
   return (
-    <main className="bg-white pt-20">
+    <main className="bg-white dark:bg-[#0a0a0c] pt-20 transition-colors duration-500">
       <Navbar />
       <CatalogGrid />
 

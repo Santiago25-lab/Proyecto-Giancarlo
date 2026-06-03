@@ -145,12 +145,12 @@ const CatalogTeaser = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center py-24 px-6 bg-white overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center py-24 px-6 bg-white dark:bg-[#0a0a0c] transition-colors duration-500 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div 
-          className="absolute inset-0 opacity-[0.04]" 
-          style={{ backgroundImage: 'linear-gradient(to right, #000000 1px, transparent 1px), linear-gradient(to bottom, #000000 1px, transparent 1px)', backgroundSize: '40px 40px' }}
+          className="absolute inset-0 text-black/[0.04] dark:text-white/[0.05] transition-colors duration-500" 
+          style={{ backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}
         />
       </div>
 
@@ -165,42 +165,42 @@ const CatalogTeaser = () => {
             </span>
           </div>
 
-          <h2 ref={headingRef} className="text-6xl md:text-8xl font-black tracking-tighter text-black mb-6 leading-none" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+          <h2 ref={headingRef} className="text-6xl md:text-8xl font-black tracking-tighter text-black dark:text-white mb-6 leading-none transition-colors duration-500" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
             CATÁ<span className="text-transparent bg-clip-text bg-gradient-to-br from-red-500 to-red-800">LOGO</span>
           </h2>
           
-          <p ref={textRef} className="text-gray-600 text-lg md:text-xl mb-10 leading-relaxed max-w-lg font-light">
-            Explora nuestra selección élite de dispositivos <span className="text-black font-bold">Apple</span>. 
+          <p ref={textRef} className="text-gray-600 dark:text-gray-400 text-lg md:text-xl mb-10 leading-relaxed max-w-lg font-light transition-colors duration-500">
+            Explora nuestra selección élite de dispositivos <span className="text-black dark:text-white font-bold transition-colors duration-500">Apple</span>. 
             Calidad impecable, asesoría de expertos y el respaldo de seguridad absoluta que define a iNariño.
           </p>
 
           {/* Trust Badges */}
           <div ref={badgesRef} className="flex flex-col sm:flex-row gap-6 mb-12">
             <div className="trust-badge flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center shadow-sm border border-red-100">
+              <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center shadow-sm border border-red-100 dark:border-red-500/20 transition-colors duration-500">
                 <ShieldCheck className="w-5 h-5 text-red-600" />
               </div>
               <div>
-                <p className="text-black font-bold text-sm">Garantía Total</p>
-                <p className="text-gray-500 text-xs">Respaldo seguro</p>
+                <p className="text-black dark:text-white font-bold text-sm transition-colors duration-500">Garantía Total</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs transition-colors duration-500">Respaldo seguro</p>
               </div>
             </div>
             <div className="trust-badge flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-black/5">
-                <Award className="w-5 h-5 text-black" />
+              <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm border border-black/5 dark:border-white/5 transition-colors duration-500">
+                <Award className="w-5 h-5 text-black dark:text-white transition-colors duration-500" />
               </div>
               <div>
-                <p className="text-black font-bold text-sm">Calidad Premium</p>
-                <p className="text-gray-500 text-xs">100% Originales</p>
+                <p className="text-black dark:text-white font-bold text-sm transition-colors duration-500">Calidad Premium</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs transition-colors duration-500">100% Originales</p>
               </div>
             </div>
             <div className="trust-badge flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-black/5">
-                <Tag className="w-5 h-5 text-black" />
+              <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm border border-black/5 dark:border-white/5 transition-colors duration-500">
+                <Tag className="w-5 h-5 text-black dark:text-white transition-colors duration-500" />
               </div>
               <div>
-                <p className="text-black font-bold text-sm">Mejor Precio</p>
-                <p className="text-gray-500 text-xs">Ofertas reales</p>
+                <p className="text-black dark:text-white font-bold text-sm transition-colors duration-500">Mejor Precio</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xs transition-colors duration-500">Ofertas reales</p>
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@ const CatalogTeaser = () => {
           <div>
             <Link
               href="/catalogo"
-              className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-black text-white font-bold rounded-full overflow-hidden transition-all duration-500 shadow-xl shadow-black/10 hover:shadow-red-600/20"
+              className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-black dark:bg-white text-white dark:text-black font-bold rounded-full overflow-hidden transition-all duration-500 shadow-xl shadow-black/10 hover:shadow-red-600/20 dark:hover:shadow-red-600/30"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
               <span className="relative z-10 tracking-wide text-sm uppercase">Adentrarse al catálogo</span>

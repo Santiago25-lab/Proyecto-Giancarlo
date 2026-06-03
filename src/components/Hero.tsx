@@ -197,7 +197,7 @@ const Hero = () => {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center bg-white"
+      className="relative min-h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0c] transition-colors duration-500"
     >
       {/* Background Video — always rendered; preload=auto ensures it plays immediately on mobile */}
       <div className="hero-video absolute inset-0 z-0 overflow-hidden">
@@ -218,7 +218,7 @@ const Hero = () => {
           {/* Fallback standard MP4 (solid background) */}
           <source src="/explocion-suave-iphone.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/60 dark:to-[#0a0a0c]/80 z-10 transition-all duration-500" />
       </div>
 
       {/* Floating Accessories */}
@@ -230,9 +230,9 @@ const Hero = () => {
           { id: 4, text: 'CALIDAD', pos: 'top-[15%] right-[22%]' },
         ].map((item) => (
           <div key={item.id} className={`accessory absolute flex items-center justify-center opacity-0 ${item.pos}`}>
-            <div className="flex items-center gap-3 bg-white/30 px-6 py-2 rounded-full backdrop-blur-sm shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/40">
+            <div className="flex items-center gap-3 bg-white/30 dark:bg-white/5 px-6 py-2 rounded-full backdrop-blur-sm shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/40 dark:border-white/10 transition-colors duration-500">
               <span className="w-2.5 h-2.5 rounded-full bg-red-600 shadow-[0_0_10px_rgba(220,38,38,0.8)] animate-pulse" />
-              <span className="text-black/80 text-lg md:text-xl font-bold tracking-[0.25em] uppercase drop-shadow-sm">
+              <span className="text-black/80 dark:text-white/80 text-lg md:text-xl font-bold tracking-[0.25em] uppercase drop-shadow-sm transition-colors duration-500">
                 {item.text}
               </span>
             </div>
@@ -274,7 +274,7 @@ const Hero = () => {
             <img
               src="/Logo inariño.png"
               alt="iNARIÑO Logo"
-              className="w-72 md:w-[480px] object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.25)]"
+              className="w-72 md:w-[480px] object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.25)] dark:brightness-0 dark:invert transition-all duration-500"
             />
           </div>
         </div>

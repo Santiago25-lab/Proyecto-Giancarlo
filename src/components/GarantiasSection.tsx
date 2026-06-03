@@ -212,7 +212,7 @@ const GarantiasSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden bg-white">
+    <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden bg-white dark:bg-[#0a0a0c] transition-colors duration-500">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-red-600/5 blur-[100px] rounded-full -z-10" />
 
       <div className="max-w-7xl mx-auto">
@@ -221,12 +221,12 @@ const GarantiasSection = () => {
         <div className="relative text-center mb-16">
           <h2
             ref={headingRef}
-            className="text-4xl md:text-6xl font-black tracking-tighter text-black mb-4"
+            className="text-4xl md:text-6xl font-black tracking-tighter text-black dark:text-white mb-4 transition-colors duration-500"
             style={{ perspective: '800px' }}
           >
             NUESTRAS <span className="text-red-600">GARANTÍAS</span>
           </h2>
-          <p ref={subRef} className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p ref={subRef} className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors duration-500">
             &ldquo;No me compran por precio. Me compran por seguridad.&rdquo;
           </p>
           <div ref={lineRef} className="h-1 w-24 bg-red-600 mx-auto rounded-full mt-6" />
@@ -323,14 +323,14 @@ const GarantiasSection = () => {
             {cards.map((card, i) => (
               <div
                 key={i}
-                className="garantia-card relative p-8 rounded-3xl bg-gray-50 border border-black/5 hover:border-red-600/20 hover:shadow-xl hover:shadow-red-600/5 transition-colors duration-300 group cursor-default"
+                className="garantia-card relative p-8 rounded-3xl bg-gray-50 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-red-600/20 dark:hover:border-red-600/30 hover:shadow-xl hover:shadow-red-600/5 transition-all duration-300 group cursor-default"
                 style={{ willChange: 'transform' }}
               >
-                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300 relative z-20">
+                <div className="w-14 h-14 bg-white dark:bg-white/10 rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300 relative z-20">
                   {card.icon}
                 </div>
-                <h3 className="text-xl font-bold text-black mb-3 relative z-20">{card.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed relative z-20">{card.desc}</p>
+                <h3 className="text-xl font-bold text-black dark:text-white mb-3 relative z-20 transition-colors duration-500">{card.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed relative z-20 transition-colors duration-500">{card.desc}</p>
               </div>
             ))}
           </div>
