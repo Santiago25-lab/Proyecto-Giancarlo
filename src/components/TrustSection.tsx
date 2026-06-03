@@ -161,7 +161,7 @@ const TrustSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-24 px-6 sticky top-0 z-0 min-h-screen flex flex-col justify-center overflow-hidden bg-black text-white">
+    <section ref={sectionRef} className="dark py-24 px-6 sticky top-0 z-0 min-h-screen flex flex-col justify-center overflow-hidden bg-black text-white">
       {/* Background glow blobs */}
       <div className="absolute bottom-0 left-0 w-1/2 h-full bg-red-600/10 blur-[150px] rounded-full -z-10" />
       <div className="absolute top-1/2 right-0 w-1/3 h-1/2 bg-red-800/10 blur-[120px] rounded-full -z-10" />
