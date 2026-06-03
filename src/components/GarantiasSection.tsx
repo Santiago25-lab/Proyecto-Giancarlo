@@ -98,20 +98,30 @@ const GarantiasSection = () => {
       // --- Cards stagger ---
       if (cardsRef.current) {
         const cards = cardsRef.current.querySelectorAll('.garantia-card');
-        gsap.from(cards, {
-          opacity: 0,
-          y: 80,
-          rotateY: 25,
-          transformOrigin: 'left center',
-          stagger: 0.12,
-          duration: 0.9,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: 'top 85%',
-            once: true,
+        gsap.fromTo(
+          cards,
+          {
+            opacity: 0,
+            y: 80,
+            rotateY: 25,
           },
-        });
+          {
+            opacity: 1,
+            y: 0,
+            rotateY: 0,
+            transformOrigin: 'left center',
+            stagger: 0.12,
+            duration: 0.9,
+            ease: 'expo.out',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: cardsRef.current,
+              start: 'top 95%',
+              once: true,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
 
         cards.forEach((card) => {
           const el = card as HTMLElement;
@@ -167,6 +177,12 @@ const GarantiasSection = () => {
         0
       );
 
+      // Force ScrollTrigger to recalculate after Next.js hydration
+      const refreshTimeout = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 150);
+
+      return () => clearTimeout(refreshTimeout);
     }, sectionRef);
 
     return () => ctx.revert();
